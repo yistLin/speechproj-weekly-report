@@ -52,7 +52,7 @@
 						</p>
 					</section>
 					<section>
-						<h2>TODO List (Week 1)</h2>
+						<h2>TODO List</h2>
 						<ul>
 							<li>01.format.sh</li>
 							<li>02.extract.feat.sh</li>
@@ -60,7 +60,7 @@
 					</section>
 					<section>
 						<h2>MFCC</h2>
-						<p>Use <i>compute-mfcc-feats</i> to compute mfcc from wav file and extract 13-dim features.</p>
+						<p>Use <i>compute-mfcc-feats</i> to compute mfcc from wav file and extract 13-dim vectors.</p>
 						<pre><code class="language-bash" data-trim>
 compute-mfcc-feats --verbose=2 \
 	$options scp:material/$target.wav.scp \
@@ -69,7 +69,7 @@ compute-mfcc-feats --verbose=2 \
 					</section>
 					<section>
 						<h2>02.extract.feat.sh</h2>
-						<p>Add 1<sup><small>st</small></sup> order and 2<sup><small>nd</small></sup> order deltas to the 13-dim features to make it 39-dim. Then, apply CMVN on this extracted feature.</p>
+						<p>Add 1<sup><small>st</small></sup> order and 2<sup><small>nd</small></sup> order deltas to the 13-dim vectors to make it become 39-dim. Then, compute and apply CMVN on this 39-dim vectors.</p>
 						<pre><code class="language-bash" data-trim>
 add-deltas --delta-order=2 \
 	ark:$path/$target.13.ark \
@@ -78,7 +78,7 @@ compute-cmvn-stats \
 	ark:$path/$target.13.delta.ark ark:- | \
 	apply-cmvn ark:- ark:$path/$target.13.delta.ark \
 	ark:$path/$target.39.cmvn.ark 2> $log
-</code></pre>
+						</code></pre>
 					</section>
 				</section>
 
@@ -158,9 +158,18 @@ done
 				<section>
 					<section>
 						<h1>Week III</h1>
+						<p>
+							Language model training , WFST decoding , Viterbi decoding
+						</p>
 					</section>
 					<section>
-						<h2>TODO List (Week 3)</h2>
+						<h2>Language Model</h2>
+						<p>
+							Use <i>ngram-count</i> to build language model
+						</p>
+					</section>
+					<section>
+						<h2>TODO List</h2>
 						<ul>
 							<li>00.train_lm.sh</li>
 							<li>01.format.sh</li>
@@ -196,11 +205,41 @@ $srilm_bin/ngram-count -order 2 \
 lm=exp/lm/lm.arpa.txt
 						</code></pre>
 					</section>
+					<section>
+						<h2>04b.mono.viterbi.sh</h2>
+						<p style="text-align:left;">
+							Result:
+						</p>
+						<pre><code class="language-blabla" data-trim>
+Generating results for test set with acoustic weight = [ 0.10 ]
+    output -> viterbi/mono/test.mlf
+    log -> viterbi/mono/log/latgen.test.log
+    result -> viterbi/mono/test.rec
+    accuracy -> [ 44.11 ] %
+
+Execution time for whole script = 00 hours 54 mins 08 secs
+						</code></pre>
+					</section>
+					<section>
+						<h2>07b.tri.viterbi.sh</h2>
+						<p style="text-align:left;">
+							Result:
+						</p>
+						<pre><code class="language-blabla" data-trim>
+Recognizing test set with acoustic weight = 0.04
+Generating char level transcription -> fst/tri/test.rec
+    result -> fst/tri/test.rec
+    accuracy -> [ 32.31 ] %
+
+Execution time for whole script = 06 hours 50 mins 51 secs
+						</code></pre>
+					</section>
 				</section>
 
                 <section>
                     <h1>THE END</h1>
                 </section>
+
             </div> <!-- END of div slides -->
 
 		</div>
