@@ -43,18 +43,62 @@
                     <p>October 13, 2016</p>
 				</section>
 
+				<!-- Week 1 -->
 				<section>
-					<h2>TODO List (Week 3)</h2>
-					<ul>
-						<li>03.mono.train.sh</li>
-						<li>05.tree.build.sh</li>
-						<li>06.tri.train.sh</li>
-					</ul>
+					<section>
+						<h1>Week I</h1>
+						<p>
+							Feature extraction.
+						</p>
+					</section>
+					<section>
+						<h2>TODO List (Week 1)</h2>
+						<ul>
+							<li>01.format.sh</li>
+							<li>02.extract.feat.sh</li>
+						</ul>
+					</section>
+					<section>
+						<h2>MFCC</h2>
+						<p>Use <i>compute-mfcc-feats</i> to compute mfcc from wav file and extract 13-dim features.</p>
+						<pre><code class="language-bash" data-trim>
+compute-mfcc-feats --verbose=2 \
+	$options scp:material/$target.wav.scp \
+	ark,t,scp:$path/$target.13.ark,$path/$target.13.scp 2> $log
+						</code></pre>
+					</section>
+					<section>
+						<h2>02.extract.feat.sh</h2>
+						<p>Add 1<sup><small>st</small></sup> order and 2<sup><small>nd</small></sup> order deltas to the 13-dim features to make it 39-dim. Then, apply CMVN on this extracted feature.</p>
+						<pre><code class="language-bash" data-trim>
+add-deltas --delta-order=2 \
+	ark:$path/$target.13.ark \
+	ark,t:$path/$target.13.delta.ark
+compute-cmvn-stats \
+	ark:$path/$target.13.delta.ark ark:- | \
+	apply-cmvn ark:- ark:$path/$target.13.delta.ark \
+	ark:$path/$target.39.cmvn.ark 2> $log
+</code></pre>
+					</section>
 				</section>
 
+				<!-- Week 2 -->
 				<section>
-					<h2>03.mono.train.sh</h2>
-					<pre><code class="language-bash"># TODO: complete the iterative training part
+					<section>
+						<h1>Week II</h1>
+					</section>
+					<section>
+						<h2>TODO List (Week 2)</h2>
+						<ul>
+							<li>03.mono.train.sh</li>
+							<li>05.tree.build.sh</li>
+							<li>06.tri.train.sh</li>
+						</ul>
+					</section>
+					<section>
+						<h2>03.mono.train.sh</h2>
+						<pre><code class="language-bash" data-trim>
+# TODO: complete the iterative training part
 for (( iter=1; $iter<$numiters; iter=$iter+1 ))
 do
 	# pass
@@ -81,12 +125,13 @@ do
 		--mix-up=$numgauss $dir/$x.mdl \
 		$dir/$x.acc $dir/$y.mdl 2> $log
 	# pass
-done</code></pre>
-				</section>
-
-				<section>
-					<h2>06.tri.train.sh</h2>
-					<pre><code class="language-bash"># TODO: complete the iterative training part
+done
+						</code></pre>
+					</section>
+					<section>
+						<h2>06.tri.train.sh</h2>
+						<pre><code class="language-bash" data-trim>
+# TODO: complete the iterative training part
 for ((iter=1; $iter<$numiters; iter=$iter+1))
 do
 	# pass
@@ -104,26 +149,33 @@ do
         --mix-up=$numgauss $dir/$x.mdl \
 		$dir/$x.acc $dir/$y.mdl 2> $log
     # pass
-done</code></pre>
+done
+						</code></pre>
+					</section>
 				</section>
 
+				<!-- Week 3 -->
 				<section>
-					<h2>TODO List (Week 4)</h2>
-					<ul>
-						<li>00.train_lm.sh</li>
-						<li>01.format.sh</li>
-						<li>04a.01.mono.mkgraph.sh</li>
-						<li>04a.02.mono.fst.sh</li>
-						<li>07a.01.tri.mkgraph.sh</li>
-						<li>07a.02.tri.fst.sh</li>
-						<li>04b.mono.viterbi.sh</li>
-						<li>07b.tri.viterbi.sh</li>
-					</ul>
-				</section>
-
-				<section>
-					<h2>00.train_lm.sh</h2>
-					<pre><code class="language-bash"># TODO:
+					<section>
+						<h1>Week III</h1>
+					</section>
+					<section>
+						<h2>TODO List (Week 3)</h2>
+						<ul>
+							<li>00.train_lm.sh</li>
+							<li>01.format.sh</li>
+							<li>04a.01.mono.mkgraph.sh</li>
+							<li>04a.02.mono.fst.sh</li>
+							<li>07a.01.tri.mkgraph.sh</li>
+							<li>07a.02.tri.fst.sh</li>
+							<li>04b.mono.viterbi.sh</li>
+							<li>07b.tri.viterbi.sh</li>
+						</ul>
+					</section>
+					<section>
+						<h2>00.train_lm.sh</h2>
+						<pre><code class="language-bash" data-trim>
+# TODO:
 #	1. process training text file
 #	2. train a language model named $lm_output
 
@@ -133,14 +185,17 @@ $srilm_bin/ngram-count -order 2 \
 	-ukndiscount \
 	-text $dir/LM_train.text \
 	-vocab $lexicon -unk \
-	-lm $lm_output</code></pre>
-				</section>
-
-				<section>
-					<h2>01.format.sh</h2>
-					<pre><code class="language-bash"># TODO: try to replace with your language model
+	-lm $lm_output
+						</code></pre>
+					</section>
+					<section>
+						<h2>01.format.sh</h2>
+						<pre><code class="language-bash" data-trim>
+# TODO: try to replace with your language model
 # lm=material/lm.arpa.txt
-lm=exp/lm/lm.arpa.txt</code></pre>
+lm=exp/lm/lm.arpa.txt
+						</code></pre>
+					</section>
 				</section>
 
                 <section>
