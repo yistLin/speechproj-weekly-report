@@ -12,6 +12,7 @@
 
 		<link rel="stylesheet" href="css/reveal.css">
 		<link rel="stylesheet" href="css/theme/white_edit.css" id="theme">
+		<link rel="stylesheet" href="css/prism.css">
 
 		<!-- Theme used for syntax highlighting of code -->
 		<link rel="stylesheet" href="lib/css/zenburn.css">
@@ -37,13 +38,77 @@
 			<!-- Any section element inside of this container is displayed as a slide -->
 			<div class="slides">
 				<section>
-					<h2>Weekly Report I</h2>
+					<h1>Weekly Report I</h1>
 					<p>林義聖、陳力宇</p>
                     <p>October 13, 2016</p>
 				</section>
 
 				<section>
-					<h2>TODO List</h2>
+					<h2>TODO List (Week 3)</h2>
+					<ul>
+						<li>03.mono.train.sh</li>
+						<li>05.tree.build.sh</li>
+						<li>06.tri.train.sh</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2>03.mono.train.sh</h2>
+					<pre><code class="language-bash"># TODO: complete the iterative training part
+for (( iter=1; $iter<$numiters; iter=$iter+1 ))
+do
+	# pass
+    if [ $iter -eq 1 ]; then
+        beam=6
+    else
+        beam=10
+    fi
+	# pass
+    gmm-align-compiled $scale_opts --beam=$beam \
+		--retry-beam=$[$beam*4] $dir/$x.mdl \
+		ark:$dir/train.graph "ark,s,cs:$feat" \
+        ark:$dir/$x.ali 2> $log
+	# pass
+	gmm-acc-stats-ali --binary=false \
+			$dir/$x.mdl "ark,s,cs:$feat" \
+            ark:$dir/train.ali $dir/$x.acc 2> $log
+	# pass
+	if [ $iter -le $maxiterinc ]; then
+        numgauss=$[$numgauss+$incgauss]
+    fi
+    gmm-est --binary=false --write-occs=$dir/$y.occs \
+		--min-gaussian-occupancy=3 \
+		--mix-up=$numgauss $dir/$x.mdl \
+		$dir/$x.acc $dir/$y.mdl 2> $log
+	# pass
+done</code></pre>
+				</section>
+
+				<section>
+					<h2>06.tri.train.sh</h2>
+					<pre><code class="language-bash"># TODO: complete the iterative training part
+for ((iter=1; $iter<$numiters; iter=$iter+1))
+do
+	# pass
+    gmm-align-compiled $scale_opts $dir/$x.mdl \
+		ark:$dir/train.graph "ark,s,cs:$feat" \
+		ark:$dir/$x.ali 2> $log
+	# pass
+	gmm-acc-stats-ali --binary=false $dir/$x.mdl \
+		"ark,s,cs:$feat" ark:$dir/train.ali \
+		$dir/$x.acc 2> $log
+	# pass
+	gmm-est --binary=false \
+		--write-occs=$dir/$y.occs \
+		--min-gaussian-occupancy=3 \
+        --mix-up=$numgauss $dir/$x.mdl \
+		$dir/$x.acc $dir/$y.mdl 2> $log
+    # pass
+done</code></pre>
+				</section>
+
+				<section>
+					<h2>TODO List (Week 4)</h2>
 					<ul>
 						<li>00.train_lm.sh</li>
 						<li>01.format.sh</li>
@@ -58,8 +123,7 @@
 
 				<section>
 					<h2>00.train_lm.sh</h2>
-					<pre><code class="hljs" data-trim>
-# TODO:
+					<pre><code class="language-bash"># TODO:
 #	1. process training text file
 #	2. train a language model named $lm_output
 
@@ -69,17 +133,14 @@ $srilm_bin/ngram-count -order 2 \
 	-ukndiscount \
 	-text $dir/LM_train.text \
 	-vocab $lexicon -unk \
-	-lm $lm_output
-					</code></pre>
+	-lm $lm_output</code></pre>
 				</section>
 
 				<section>
 					<h2>01.format.sh</h2>
-					<pre><code class="hljs" data-trim>
-# TODO: try to replace with your language model
+					<pre><code class="language-bash"># TODO: try to replace with your language model
 # lm=material/lm.arpa.txt
-lm=exp/lm/lm.arpa.txt
-					</code></pre>
+lm=exp/lm/lm.arpa.txt</code></pre>
 				</section>
 
                 <section>
@@ -108,7 +169,8 @@ lm=exp/lm/lm.arpa.txt
 					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
 					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
 					{ src: 'plugin/zoom-js/zoom.js', async: true },
-					{ src: 'plugin/notes/notes.js', async: true }
+					{ src: 'plugin/notes/notes.js', async: true },
+					{ src: 'plugin/prism/prism.js', async: true }
 				]
 			});
 		</script>
