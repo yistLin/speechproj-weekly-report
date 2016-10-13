@@ -224,13 +224,6 @@ gmm-est --binary=false --min-gaussian-occupancy=3 --mix-up=$numgauss \
 						<p class="fragment">gmm-est</p>
 					</section>
 					<section>
-						<h2></h2>
-						<p>
-						</p>
-						<pre><code class="language-bash" data-trim>
-						</code></pre>
-					</section>
-					<section>
 						<h2>gmm-init-model</h2>
 						<p>
 							Initialize GMM from decision tree and tree stats
@@ -272,30 +265,16 @@ convert-ali \
 	2> $log
 						</code></pre>
 					</section>
-					<!-- <section>
+					<section id="frgments">
 						<h2>06.tri.train.sh</h2>
-						<pre><code class="language-bash" data-trim>
-# TODO: complete the iterative training part
-for ((iter=1; $iter<$numiters; iter=$iter+1))
-do
-	# pass
-    gmm-align-compiled $scale_opts $dir/$x.mdl \
-		ark:$dir/train.graph "ark,s,cs:$feat" \
-		ark:$dir/$x.ali 2> $log
-	# pass
-	gmm-acc-stats-ali --binary=false $dir/$x.mdl \
-		"ark,s,cs:$feat" ark:$dir/train.ali \
-		$dir/$x.acc 2> $log
-	# pass
-	gmm-est --binary=false \
-		--write-occs=$dir/$y.occs \
-		--min-gaussian-occupancy=3 \
-        --mix-up=$numgauss $dir/$x.mdl \
-		$dir/$x.acc $dir/$y.mdl 2> $log
-    # pass
-done
-						</code></pre>
-					</section> -->
+						<p class="fragment">gmm-init-model</p>
+						<p class="fragment">gmm-mixup</p>
+						<p class="fragment">convert-ali</p>
+						<p class="fragment">compile-train-graphs</p>
+						<p class="fragment">gmm-align-compiled</p>
+						<p class="fragment">gmm-acc-stats-ali</p>
+						<p class="fragment">gmm-est</p>
+					</section>
 				</section>
 
 				<!-- Week 3 -->
