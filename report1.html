@@ -52,15 +52,19 @@
 						</p>
 					</section>
 					<section>
-						<h2>TODO List</h2>
-						<ul>
-							<li>01.format.sh</li>
-							<li>02.extract.feat.sh</li>
-						</ul>
+						<h2>Feature Extraction</h2>
+						<p>
+							Given Waveform audio file, use <i>MFCC</i> to extract 13-dim vectors from it, combine the vectors with its <i>delta</i> to make it 39-dim, and use <i>CMVN</i> to normalize it.
+						</p>
 					</section>
 					<section>
-						<h2>MFCC</h2>
-						<p>Use <i>compute-mfcc-feats</i> to compute mfcc from wav file and extract 13-dim vectors.</p>
+						<h2>compute-mfcc-feats</h2>
+						<p>
+							<i>MFCC</i>, Mel-frequency cepstral coefficients, are a feature widely used in automatic speech and speaker recognition.
+						</p>
+						<p>
+							We use <i>compute-mfcc-feats</i> to compute mfcc from waveform audio file and extract 13-dim vectors (its default <i>--num-ceps</i> is 13).
+						</p>
 						<pre><code class="language-bash" data-trim>
 compute-mfcc-feats --verbose=2 \
 	$options scp:material/$target.wav.scp \
@@ -68,8 +72,29 @@ compute-mfcc-feats --verbose=2 \
 						</code></pre>
 					</section>
 					<section>
+						<h2>add-deltas</h2>
+						<p>
+							The MFCC feature vector describes only the power spectral envelope of a single frame, but it seems like speech would also have information in the dynamics i.e. what are the trajectories of the MFCC coefficients over time.
+						</p>
+						<p>
+							We use <i>add-deltas</i> to get 13 delta coefficients and 13 delta-delta coefficients, which would be combine to give a 39-dim feature vectors.
+						</p>
+					</section>
+					<section>
+						<h2>compute-cmvn-stats<br>&amp; apply-cmvn</h2>
+						<p>
+							CMVN, Cepstral Mean and Variance Normalization. Compute cmvn and apply it on the 39-dim feature vectors.
+						</p>
+					</section>
+					<section>
+						<h2>TODO List</h2>
+						<ul>
+							<li>01.format.sh</li>
+							<li>02.extract.feat.sh</li>
+						</ul>
+					</section>
+					<section>
 						<h2>02.extract.feat.sh</h2>
-						<p>Add 1<sup><small>st</small></sup> order and 2<sup><small>nd</small></sup> order deltas to the 13-dim vectors to make it become 39-dim. Then, compute and apply CMVN on this 39-dim vectors.</p>
 						<pre><code class="language-bash" data-trim>
 add-deltas --delta-order=2 \
 	ark:$path/$target.13.ark \
@@ -79,6 +104,12 @@ compute-cmvn-stats \
 	apply-cmvn ark:- ark:$path/$target.13.delta.ark \
 	ark:$path/$target.39.cmvn.ark 2> $log
 						</code></pre>
+					</section>
+					<section>
+						<h2>Reference</h2>
+						<ul>
+							<li><i>Mel Frequency Cepstral Coefficient (MFCC) tutorial</i> - http://practicalcryptography.com/miscellaneous/machine-learning/guide-mel-frequency-cepstral-coefficients-mfccs/</li>
+						</ul>
 					</section>
 				</section>
 
