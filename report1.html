@@ -86,6 +86,9 @@ compute-cmvn-stats \
 				<section>
 					<section>
 						<h1>Week II</h1>
+						<p>
+							Acoustic Model Training
+						</p>
 					</section>
 					<section>
 						<h2>TODO List (Week 2)</h2>
@@ -126,6 +129,67 @@ do
 		$dir/$x.acc $dir/$y.mdl 2> $log
 	# pass
 done
+						</code></pre>
+					</section>
+					<section>
+						<h2>gmm-init-mono</h2>
+						<p>
+							Initialize monophone GMM
+						</p>
+						<pre><code class="language-bash" data-trim>
+gmm-init-mono --binary=false $shared_phones_opt \
+	"--train-feats=ark:subset-feats --n=10 \"ark,s,cs:$feat\" ark:- |" \
+	train/topo $dim $dir/00.mdl $dir/tree 2> $log
+						</code></pre>
+					</section>
+					<section>
+						<h2>compile-train-graphs</h2>
+						<p>
+							Creates training graphs
+						</p>
+						<pre><code class="language-bash" data-trim>
+compile-train-graphs $dir/tree $dir/00.mdl train/L.fst \
+	ark:train/train.int ark:$dir/train.graph 2> $log
+						</code></pre>
+					</section>
+					<section>
+						<h2>align-equal-compiled</h2>
+						<p>
+							Write an equally spaced alignment (first interation)
+						</p>
+						<pre><code class="language-bash" data-trim>
+align-equal-compiled ark:$dir/train.graph "ark,s,cs:$feat" \
+	ark:$dir/00.ali 2> $log
+						</code></pre>
+					</section>
+					<section>
+						<h2>gmm-align-compiled</h2>
+						<p>
+							Align features given [GMM-based] models
+						</p>
+						<pre><code class="language-bash" data-trim>
+gmm-align-compiled $scale_opts --beam=$beam --retry-beam=$[$beam*4] \
+	$dir/$x.mdl ark:$dir/train.graph "ark,s,cs:$feat" ark:$dir/$x.ali 2> $log
+						</code></pre>
+					</section>
+					<section>
+						<h2>gmm-acc-stats-ali</h2>
+						<p>
+							Accumulate stats for GMM training
+						</p>
+						<pre><code class="language-bash" data-trim>
+gmm-acc-stats-ali --binary=false $dir/00.mdl "ark,s,cs:$feat" \
+  ark:$dir/train.ali $dir/$x.acc 2> $log
+						</code></pre>
+					</section>
+					<section>
+						<h2>gmm-est</h2>
+						<p>
+							Do Maximum Likelihood re-estimation of GMM-based acoustic model
+						</p>
+						<pre><code class="language-bash" data-trim>
+gmm-est --binary=false --min-gaussian-occupancy=3 --mix-up=$numgauss \
+  $dir/$x.mdl $dir/$x.acc $dir/$y.mdl 2> $log
 						</code></pre>
 					</section>
 					<section>
