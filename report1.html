@@ -230,6 +230,48 @@ gmm-est --binary=false --min-gaussian-occupancy=3 --mix-up=$numgauss \
 						<pre><code class="language-bash" data-trim>
 						</code></pre>
 					</section>
+					<section>
+						<h2>gmm-init-model</h2>
+						<p>
+							Initialize GMM from decision tree and tree stats
+						</p>
+						<pre><code class="language-bash" data-trim>
+gmm-init-model --write-occs=$dir/00.occs \
+	$treedir/tree \ 	# tree-in
+	$treedir/tree.acc \ # tree-stats-in
+	train/topo \ 		# topo-file
+	$dir/00.mdl \ 		# model-out
+	2> $log
+						</code></pre>
+					</section>
+					<section>
+						<h2>gmm-mixup</h2>
+						<p>
+							Does GMM mixing up
+						</p>
+						<pre><code class="language-bash" data-trim>
+gmm-mixup --mix-up=$numgauss \
+	$dir/00.mdl \ 	# model-in
+	$dir/00.occs \ 	# state-occs-in
+	$dir/01.mdl \ 	# model-out
+	2> $log
+						</code></pre>
+					</section>
+					<section>
+						<h2>convert-ali</h2>
+						<p>
+							Convert alignments from one decision-tree/model to another
+						</p>
+						<pre><code class="language-bash" data-trim>
+convert-ali \
+	$srcdir/final.mdl \ 	# old-model
+	$dir/01.mdl \ 			# new-model
+	$dir/tree \ 			# new-tree
+	ark:$srcdir/train.ali \ # old-alignments-rspecifier
+	ark:$dir/00.ali \ 		# new-alignments-wspecifier
+	2> $log
+						</code></pre>
+					</section>
 					<!-- <section>
 						<h2>06.tri.train.sh</h2>
 						<pre><code class="language-bash" data-trim>
