@@ -129,39 +129,6 @@ compute-cmvn-stats \
 							<li>06.tri.train.sh</li>
 						</ul>
 					</section>
-					<!-- <section>
-						<h2>03.mono.train.sh</h2>
-						<pre><code class="language-bash" data-trim>
-# TODO: complete the iterative training part
-for (( iter=1; $iter<$numiters; iter=$iter+1 ))
-do
-	# pass
-    if [ $iter -eq 1 ]; then
-        beam=6
-    else
-        beam=10
-    fi
-	# pass
-    gmm-align-compiled $scale_opts --beam=$beam \
-		--retry-beam=$[$beam*4] $dir/$x.mdl \
-		ark:$dir/train.graph "ark,s,cs:$feat" \
-        ark:$dir/$x.ali 2> $log
-	# pass
-	gmm-acc-stats-ali --binary=false \
-			$dir/$x.mdl "ark,s,cs:$feat" \
-            ark:$dir/train.ali $dir/$x.acc 2> $log
-	# pass
-	if [ $iter -le $maxiterinc ]; then
-        numgauss=$[$numgauss+$incgauss]
-    fi
-    gmm-est --binary=false --write-occs=$dir/$y.occs \
-		--min-gaussian-occupancy=3 \
-		--mix-up=$numgauss $dir/$x.mdl \
-		$dir/$x.acc $dir/$y.mdl 2> $log
-	# pass
-done
-						</code></pre>
-					</section> -->
 					<section>
 						<h2>gmm-init-mono</h2>
 						<p>
@@ -245,6 +212,22 @@ gmm-est --binary=false --min-gaussian-occupancy=3 --mix-up=$numgauss \
 	$dir/$x.acc \ 	# stats-in
 	$dir/$y.mdl \ 	# model-out
 	2> $log
+						</code></pre>
+					</section>
+					<section id="fragments">
+						<h2>03.mono.train.sh</h2>
+						<p class="fragment">gmm-init-mono</p>
+						<p class="fragment">compile-train-graphs</p>
+						<p> <span class="fragment"><span class="fragment fade-out">align-equal-compiled</span></span></p>
+						<p class="fragment">gmm-align-compiled</p>
+						<p class="fragment">gmm-acc-stats-ali</p>
+						<p class="fragment">gmm-est</p>
+					</section>
+					<section>
+						<h2></h2>
+						<p>
+						</p>
+						<pre><code class="language-bash" data-trim>
 						</code></pre>
 					</section>
 					<!-- <section>
