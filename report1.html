@@ -438,14 +438,50 @@ Generating results for test set with acoustic weight = [ 0.10 ]
 Execution time for whole script = 00 hours 23 mins 04 secs
 						</code></pre>
 					</section>
+					<section>
+						<h2>07b.tri.viterbi.sh</h2>
+						<ul style="text-align:left;">
+							<li>order = 3</li>
+							<li>kndiscount</li>
+						</ul>
+						<p style="text-align:left;">
+							Result 3:
+						</p>
+						<pre><code class="language-plain" data-trim>
+Generating results for test set with acoustic weight = [ 0.08 ]
+    output -> viterbi/tri/test.mlf
+    log -> viterbi/tri/log/latgen.test.log
+    result -> viterbi/tri/test.rec
+    accuracy -> [ 57.04 ] %
+
+Execution time for whole script = 00 hours 59 mins 49 secs
+						</code></pre>
+					</section>
 				</section>
 
 				<section>
-					<h2>Observation &amp; Question</h2>
-					<ul>
-						<li>Where to increase the number of guassions?</li>
-						<li>gmm-align-compiled --beam=? --retry-beam=?</li>
-					</ul>
+					<section>
+						<h2>Observation &amp; Question</h2>
+						<ul>
+							<li>Where to increase the number of guassions?</li>
+							<li>gmm-align-compiled --beam=? --retry-beam=?</li>
+						</ul>
+					</section>
+					<section>
+						<h2>Observe 01.format.sh</h2>
+						<ul>
+							<li>There are
+								<ul>
+									<li>audio file label &rightarrow; absolute file path</li>
+									<li>words &rightarrow; phone</li>
+									<li>phone &rightarrow; phone label</li>
+								</ul>
+								in folder <i>proj1.ASTMIC.subset/material</i>
+							</li>
+							<li>Combine these data to make <i>train.int</i></li>
+							<li>Knowing this, we try to create our own lexicon</li>
+						</ul>
+					</section>
 				</section>
 
                 <section>
