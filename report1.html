@@ -164,9 +164,10 @@ done
 					</section>
 					<section>
 						<h2>Language Model</h2>
-						<p>
-							Use <i>ngram-count</i> to build language model
-						</p>
+						<ul>
+							<li>Use <i>ngram-count</i> to build language model</li>
+							<li>Smoothing - </li>
+						</ul>
 					</section>
 					<section>
 						<h2>TODO List</h2>
@@ -191,7 +192,7 @@ done
 cut -d ' ' -f 2- $train_text > $dir/LM_train.text
 
 $srilm_bin/ngram-count -order 2 \
-	-ukndiscount \
+	-kndiscount2 \
 	-text $dir/LM_train.text \
 	-vocab $lexicon -unk \
 	-lm $lm_output
@@ -208,9 +209,9 @@ lm=exp/lm/lm.arpa.txt
 					<section>
 						<h2>04b.mono.viterbi.sh</h2>
 						<p style="text-align:left;">
-							Result:
+							Result 1 (bi-gram):
 						</p>
-						<pre><code class="language-blabla" data-trim>
+						<pre><code class="language-plain" data-trim>
 Generating results for test set with acoustic weight = [ 0.10 ]
     output -> viterbi/mono/test.mlf
     log -> viterbi/mono/log/latgen.test.log
@@ -221,19 +222,57 @@ Execution time for whole script = 00 hours 54 mins 08 secs
 						</code></pre>
 					</section>
 					<section>
-						<h2>07b.tri.viterbi.sh</h2>
+						<h2>04b.mono.viterbi.sh</h2>
 						<p style="text-align:left;">
-							Result:
+							Result 2 (tri-gram):
 						</p>
-						<pre><code class="language-blabla" data-trim>
-Recognizing test set with acoustic weight = 0.04
-Generating char level transcription -> fst/tri/test.rec
-    result -> fst/tri/test.rec
-    accuracy -> [ 32.31 ] %
+						<pre><code class="language-plain" data-trim>
+Generating results for test set with acoustic weight = [ 0.12 ]
+    output -> viterbi/mono/test.mlf
+    log -> viterbi/mono/log/latgen.test.log
+    result -> viterbi/mono/test.rec
+    accuracy -> [ 46.63 ] %
 
-Execution time for whole script = 06 hours 50 mins 51 secs
+Execution time for whole script = 00 hours 40 mins 48 secs
 						</code></pre>
 					</section>
+					<section>
+						<h2>07b.tri.viterbi.sh</h2>
+						<p style="text-align:left;">
+							Result 1 (bi-gram):
+						</p>
+						<pre><code class="language-plain" data-trim>
+Generating results for test set with acoustic weight = [ 0.08 ]
+    output -> viterbi/tri/test.mlf
+    log -> viterbi/tri/log/latgen.test.log
+    result -> viterbi/tri/test.rec
+    accuracy -> [ 55.17 ] %
+
+Execution time for whole script = 00 hours 37 mins 04 secs
+						</code></pre>
+					</section>
+					<section>
+						<h2>07b.tri.viterbi.sh</h2>
+						<p style="text-align:left;">
+							Result 2 (tri-gram):
+						</p>
+						<pre><code class="language-plain" data-trim>
+Generating results for test set with acoustic weight = [ 0.10 ]
+    output -> viterbi/tri/test.mlf
+    log -> viterbi/tri/log/latgen.test.log
+    result -> viterbi/tri/test.rec
+    accuracy -> [ 55.72 ] %
+
+Execution time for whole script = 00 hours 23 mins 04 secs
+						</code></pre>
+					</section>
+				</section>
+
+				<section>
+					<h2>Observation &amp; Question</h2>
+					<ul>
+						<li>Where to increase the number of guassions?</li>
+					</ul>
 				</section>
 
                 <section>
