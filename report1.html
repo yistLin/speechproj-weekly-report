@@ -292,7 +292,7 @@ hmm-info final.mdl
 number of phones 36
 number of pdfs 1661
 number of transition-ids 3375
-number of transition-states 1686						
+number of transition-states 1686
 						</code></pre>
 					</section>
 				</section>
@@ -424,6 +424,26 @@ Generating results for test set with acoustic weight = [ 0.10 ]
 Execution time for whole script = 00 hours 55 mins 18 secs
 						</code></pre>
 					</section>
+                    <section>
+                        <h2>04b.mono.viterbi.sh</h2>
+						<ul style="text-align:left;">
+							<li>order = 3</li>
+							<li>kndiscount</li>
+                            <li>max number of guassians = 2000</li>
+						</ul>
+						<p style="text-align:left;">
+							Result 4:
+						</p>
+						<pre><code class="language-plain" data-trim>
+Generating results for test set with acoustic weight = [ 0.10 ]
+    output -> viterbi/mono/test.mlf
+    log -> viterbi/mono/log/latgen.test.log
+    result -> viterbi/mono/test.rec
+    accuracy -> [ 48.69 ] %
+
+Execution time for whole script = 01 hours 47 mins 00 secs
+						</code></pre>
+                    </section>
 					<section>
 						<h2>07b.tri.viterbi.sh</h2>
 						<ul style="text-align:left;">
@@ -481,6 +501,26 @@ Generating results for test set with acoustic weight = [ 0.08 ]
 Execution time for whole script = 00 hours 59 mins 49 secs
 						</code></pre>
 					</section>
+                    <section>
+                        <h2>07b.tri.viterbi.sh</h2>
+						<ul style="text-align:left;">
+							<li>order = 3</li>
+							<li>kndiscount</li>
+                            <li>max number of guassians = $num_pdfs &times; 10</li>
+						</ul>
+						<p style="text-align:left;">
+							Result 4:
+						</p>
+						<pre><code class="language-plain" data-trim>
+Generating results for test set with acoustic weight = [ 0.08 ]
+    output -> viterbi/tri/test.mlf
+    log -> viterbi/tri/log/latgen.test.log
+    result -> viterbi/tri/test.rec
+    accuracy -> [ 52.73 ] %
+                    
+Execution time for whole script = 01 hours 22 mins 09 secs ] ]
+                        </code></pre>
+                    </section>
 				</section>
 
 				<section>
