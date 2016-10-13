@@ -288,9 +288,27 @@ convert-ali \
 					<section>
 						<h2>Language Model</h2>
 						<ul>
-							<li>Use <i>ngram-count</i> to build language model</li>
-							<li>Smoothing - </li>
+							<li>Use <i>ngram-count</i> in SRILM (SRI Language Modeling Toolkit) to build language model</li>
+							<li>Smoothing - give some probability to the grams that never appear in training data to make it nonzero.</li>
 						</ul>
+					</section>
+					<section>
+						<h2>WFST Decoding</h2>
+						<ul>
+							<li>H: HMM structure</li>
+							<li>C: Context-dependent relabeling</li>
+							<li>L: Lexicon</li>
+							<li>G: language model acceptor</li>
+						</ul>
+					</section>
+					<section>
+						<h2>Viterbi Decoding</h2>
+						<p>
+							The Viterbi algorithm is a dynamic programming algorithm for finding the most likely sequence of hidden states.
+						</p>
+						<p>
+							For example, in speech-to-text (speech recognition), the acoustic signal is treated as the observed sequence of events, and a string of text is considered to be the "hidden cause" of the acoustic signal. The Viterbi algorithm finds the most likely string of text given the acoustic signal.
+						</p>
 					</section>
 					<section>
 						<h2>TODO List</h2>
@@ -336,7 +354,7 @@ lm=exp/lm/lm.arpa.txt
 							<li>kndiscount2</li>
 						</ul>
 						<p style="text-align:left;">
-							Result 1 (bi-gram):
+							Result 1:
 						</p>
 						<pre><code class="language-plain" data-trim>
 Generating results for test set with acoustic weight = [ 0.10 ]
@@ -355,7 +373,7 @@ Execution time for whole script = 00 hours 54 mins 08 secs
 							<li>kndiscount3</li>
 						</ul>
 						<p style="text-align:left;">
-							Result 2 (tri-gram):
+							Result 2:
 						</p>
 						<pre><code class="language-plain" data-trim>
 Generating results for test set with acoustic weight = [ 0.12 ]
@@ -368,13 +386,32 @@ Execution time for whole script = 00 hours 40 mins 48 secs
 						</code></pre>
 					</section>
 					<section>
+						<h2>04b.mono.viterbi.sh</h2>
+						<ul style="text-align:left;">
+							<li>order = 3</li>
+							<li>kndiscount</li>
+						</ul>
+						<p style="text-align:left;">
+							Result 3:
+						</p>
+						<pre><code class="language-plain" data-trim>
+Generating results for test set with acoustic weight = [ 0.10 ]
+    output -> viterbi/mono/test.mlf
+    log -> viterbi/mono/log/latgen.test.log
+    result -> viterbi/mono/test.rec
+    accuracy -> [ 46.25 ] %
+
+Execution time for whole script = 00 hours 55 mins 18 secs
+						</code></pre>
+					</section>
+					<section>
 						<h2>07b.tri.viterbi.sh</h2>
 						<ul style="text-align:left;">
 							<li>order = 2</li>
 							<li>kndiscount2</li>
 						</ul>
 						<p style="text-align:left;">
-							Result 1 (bi-gram):
+							Result 1:
 						</p>
 						<pre><code class="language-plain" data-trim>
 Generating results for test set with acoustic weight = [ 0.08 ]
@@ -393,7 +430,7 @@ Execution time for whole script = 00 hours 37 mins 04 secs
 							<li>kndiscount3</li>
 						</ul>
 						<p style="text-align:left;">
-							Result 2 (tri-gram):
+							Result 2:
 						</p>
 						<pre><code class="language-plain" data-trim>
 Generating results for test set with acoustic weight = [ 0.10 ]
