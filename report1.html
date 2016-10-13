@@ -129,39 +129,6 @@ compute-cmvn-stats \
 							<li>06.tri.train.sh</li>
 						</ul>
 					</section>
-					<!-- <section>
-						<h2>03.mono.train.sh</h2>
-						<pre><code class="language-bash" data-trim>
-# TODO: complete the iterative training part
-for (( iter=1; $iter<$numiters; iter=$iter+1 ))
-do
-	# pass
-    if [ $iter -eq 1 ]; then
-        beam=6
-    else
-        beam=10
-    fi
-	# pass
-    gmm-align-compiled $scale_opts --beam=$beam \
-		--retry-beam=$[$beam*4] $dir/$x.mdl \
-		ark:$dir/train.graph "ark,s,cs:$feat" \
-        ark:$dir/$x.ali 2> $log
-	# pass
-	gmm-acc-stats-ali --binary=false \
-			$dir/$x.mdl "ark,s,cs:$feat" \
-            ark:$dir/train.ali $dir/$x.acc 2> $log
-	# pass
-	if [ $iter -le $maxiterinc ]; then
-        numgauss=$[$numgauss+$incgauss]
-    fi
-    gmm-est --binary=false --write-occs=$dir/$y.occs \
-		--min-gaussian-occupancy=3 \
-		--mix-up=$numgauss $dir/$x.mdl \
-		$dir/$x.acc $dir/$y.mdl 2> $log
-	# pass
-done
-						</code></pre>
-					</section> -->
 					<section>
 						<h2>gmm-init-mono</h2>
 						<p>
@@ -247,30 +214,87 @@ gmm-est --binary=false --min-gaussian-occupancy=3 --mix-up=$numgauss \
 	2> $log
 						</code></pre>
 					</section>
-					<!-- <section>
-						<h2>06.tri.train.sh</h2>
-						<pre><code class="language-bash" data-trim>
-# TODO: complete the iterative training part
-for ((iter=1; $iter<$numiters; iter=$iter+1))
-do
-	# pass
-    gmm-align-compiled $scale_opts $dir/$x.mdl \
-		ark:$dir/train.graph "ark,s,cs:$feat" \
-		ark:$dir/$x.ali 2> $log
-	# pass
-	gmm-acc-stats-ali --binary=false $dir/$x.mdl \
-		"ark,s,cs:$feat" ark:$dir/train.ali \
-		$dir/$x.acc 2> $log
-	# pass
-	gmm-est --binary=false \
-		--write-occs=$dir/$y.occs \
-		--min-gaussian-occupancy=3 \
-        --mix-up=$numgauss $dir/$x.mdl \
-		$dir/$x.acc $dir/$y.mdl 2> $log
-    # pass
-done
+					<section id="fragments">
+						<h2>03.mono.train.sh</h2>
+						<p class="fragment">gmm-init-mono</p>
+						<p class="fragment">compile-train-graphs</p>
+						<p> <span class="fragment"><span class="fragment fade-out">align-equal-compiled</span></span></p>
+						<p class="fragment">gmm-align-compiled</p>
+						<p class="fragment">gmm-acc-stats-ali</p>
+						<p class="fragment">gmm-est</p>
+					</section>
+					<section>
+						<h2>result</h2>
+						<pre><code class="laguage-bash" data-trim>
+hmm-info final.mdl
+number of phones 36
+number of pdfs 108
+number of transition-ids 219
+number of transition-states 108
 						</code></pre>
-					</section> -->
+					</section>
+					<section>
+						<h2>gmm-init-model</h2>
+						<p>
+							Initialize GMM from decision tree and tree stats
+						</p>
+						<pre><code class="language-bash" data-trim>
+gmm-init-model --write-occs=$dir/00.occs \
+	$treedir/tree \ 	# tree-in
+	$treedir/tree.acc \ # tree-stats-in
+	train/topo \ 		# topo-file
+	$dir/00.mdl \ 		# model-out
+	2> $log
+						</code></pre>
+					</section>
+					<section>
+						<h2>gmm-mixup</h2>
+						<p>
+							Does GMM mixing up
+						</p>
+						<pre><code class="language-bash" data-trim>
+gmm-mixup --mix-up=$numgauss \
+	$dir/00.mdl \ 	# model-in
+	$dir/00.occs \ 	# state-occs-in
+	$dir/01.mdl \ 	# model-out
+	2> $log
+						</code></pre>
+					</section>
+					<section>
+						<h2>convert-ali</h2>
+						<p>
+							Convert alignments from one decision-tree/model to another
+						</p>
+						<pre><code class="language-bash" data-trim>
+convert-ali \
+	$srcdir/final.mdl \ 	# old-model
+	$dir/01.mdl \ 			# new-model
+	$dir/tree \ 			# new-tree
+	ark:$srcdir/train.ali \ # old-alignments-rspecifier
+	ark:$dir/00.ali \ 		# new-alignments-wspecifier
+	2> $log
+						</code></pre>
+					</section>
+					<section id="frgments">
+						<h2>06.tri.train.sh</h2>
+						<p class="fragment">gmm-init-model</p>
+						<p class="fragment">gmm-mixup</p>
+						<p class="fragment">convert-ali</p>
+						<p class="fragment">compile-train-graphs</p>
+						<p class="fragment">gmm-align-compiled</p>
+						<p class="fragment">gmm-acc-stats-ali</p>
+						<p class="fragment">gmm-est</p>
+					</section>
+					<section>
+						<h2>result</h2>
+						<pre><code class="laguage-bash" data-trim>
+hmm-info final.mdl
+number of phones 36
+number of pdfs 1661
+number of transition-ids 3375
+number of transition-states 1686						
+						</code></pre>
+					</section>
 				</section>
 
 				<!-- Week 3 -->
