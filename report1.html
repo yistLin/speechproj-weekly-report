@@ -139,7 +139,11 @@ done
 						<pre><code class="language-bash" data-trim>
 gmm-init-mono --binary=false $shared_phones_opt \
 	"--train-feats=ark:subset-feats --n=10 \"ark,s,cs:$feat\" ark:- |" \
-	train/topo $dim $dir/00.mdl $dir/tree 2> $log
+	train/topo \ 	# topology-in
+	$dim \			# dim
+	$dir/00.mdl \	# model-out
+	$dir/tree \		# tree-out
+	2> $log
 						</code></pre>
 					</section>
 					<section>
@@ -148,8 +152,13 @@ gmm-init-mono --binary=false $shared_phones_opt \
 							Creates training graphs
 						</p>
 						<pre><code class="language-bash" data-trim>
-compile-train-graphs $dir/tree $dir/00.mdl train/L.fst \
-	ark:train/train.int ark:$dir/train.graph 2> $log
+compile-train-graphs \
+	$dir/tree \ 			# tree-in
+	$dir/00.mdl \ 			# model-in
+	train/L.fst \ 			# lexicon-fst-in
+	ark:train/train.int \ 	# transcriptions-rspecifier
+	ark:$dir/train.graph \ 	# graphs-wspecifier
+	2> $log
 						</code></pre>
 					</section>
 					<section>
@@ -158,8 +167,11 @@ compile-train-graphs $dir/tree $dir/00.mdl train/L.fst \
 							Write an equally spaced alignment (first interation)
 						</p>
 						<pre><code class="language-bash" data-trim>
-align-equal-compiled ark:$dir/train.graph "ark,s,cs:$feat" \
-	ark:$dir/00.ali 2> $log
+align-equal-compiled \
+	ark:$dir/train.graph \ 	# graphs-rspecifier
+	"ark,s,cs:$feat" \ 		# features-rspecifier
+	ark:$dir/00.ali \ 		# alignments-wspecifier
+	2> $log
 						</code></pre>
 					</section>
 					<section>
@@ -168,8 +180,13 @@ align-equal-compiled ark:$dir/train.graph "ark,s,cs:$feat" \
 							Align features given [GMM-based] models
 						</p>
 						<pre><code class="language-bash" data-trim>
-gmm-align-compiled $scale_opts --beam=$beam --retry-beam=$[$beam*4] \
-	$dir/$x.mdl ark:$dir/train.graph "ark,s,cs:$feat" ark:$dir/$x.ali 2> $log
+gmm-align-compiled $scale_opts \
+	--beam=$beam --retry-beam=$[$beam*4] \
+	$dir/$x.mdl \ 			# model-in
+	ark:$dir/train.graph \ 	# graphs-rspecifier
+	"ark,s,cs:$feat" \ 		# feature-rspecifier
+	ark:$dir/$x.ali \ 		# alignments-wspecifier
+	2> $log
 						</code></pre>
 					</section>
 					<section>
@@ -178,8 +195,12 @@ gmm-align-compiled $scale_opts --beam=$beam --retry-beam=$[$beam*4] \
 							Accumulate stats for GMM training
 						</p>
 						<pre><code class="language-bash" data-trim>
-gmm-acc-stats-ali --binary=false $dir/00.mdl "ark,s,cs:$feat" \
-  ark:$dir/train.ali $dir/$x.acc 2> $log
+gmm-acc-stats-ali --binary=false \
+	$dir/00.mdl \ 			# model-in
+	"ark,s,cs:$feat" \ 		# feature-rspecifier
+  	ark:$dir/train.ali \ 	# alignments-rspecifier
+	$dir/$x.acc \ 			# stats-out
+	2> $log
 						</code></pre>
 					</section>
 					<section>
@@ -189,7 +210,10 @@ gmm-acc-stats-ali --binary=false $dir/00.mdl "ark,s,cs:$feat" \
 						</p>
 						<pre><code class="language-bash" data-trim>
 gmm-est --binary=false --min-gaussian-occupancy=3 --mix-up=$numgauss \
-  $dir/$x.mdl $dir/$x.acc $dir/$y.mdl 2> $log
+  	$dir/$x.mdl \	# model-in
+	$dir/$x.acc \ 	# stats-in
+	$dir/$y.mdl \ 	# model-out
+	2> $log
 						</code></pre>
 					</section>
 					<!-- <section>
