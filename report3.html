@@ -26,6 +26,25 @@
 			document.getElementsByTagName( 'head' )[0].appendChild( link );
 		</script>
 
+    <style type="text/css">
+      p.seq {
+        font-size: 24px;
+        margin-top:0;
+        margin-bottom:0;
+      }
+      p.arrow {
+        font-size: 30px;
+        margin-top:0;
+        margin-bottom:0;
+      }
+      p.vector {
+        font-size: 24px;
+        margin: 0 auto;
+        border: 1px solid black;
+        width: 80%;
+      }
+    </style>
+
 		<!--[if lt IE 9]>
 		<script src="lib/js/html5shiv.js"></script>
 		<![endif]-->
@@ -55,6 +74,73 @@
           <section>
             <h2>Sequence to Sequence Learning with Neural Networks</h2>
             <p>Ilya Sutskever, Oriol Vinyals, Quoc V.Le</p>
+            <p><small><u>http://papers.nips.cc/paper/5346-information-based-learning-by-agents-in-unbounded-state-spaces.pdf</u></small></p>
+          </section>
+          <section>
+            <h3>Introduction</h3>
+            <ul>
+              <li>It's an end-to-end approach to sequence learning</li>
+              <li>
+                Some features:
+                <ol>
+                  <li>Multilayered LSTM to map input sentence to a fixed-dimension vector</li>
+                  <li>Another deep LSTM to decode vector to output sentence</li>
+                  <li><i>Reverse</i> the order of the words in all source sentence</li>
+                </ol>
+              </li>
+              <li>Machine translation on an English to French translation task from the <i>WMT'14</i> dataset</li>
+            </ul>
+          </section>
+          <section>
+            <h3>Introduction</h3>
+            <p class="seq">&rarr; input sequence</p>
+            <p class="arrow">&darr;</p>
+            <p class="seq">(<i>reverse order</i>)</p>
+            <p class="arrow">&darr;</p>
+            <p class="seq">sentence input &larr;</p>
+            <p class="arrow">&darr;</p>
+            <p class="vector">LSTM ...</p>
+            <p class="arrow">&darr;</p>
+            <p class="vector">fixed-dim vector</p>
+            <p class="arrow">&darr;</p>
+            <p class="vector">LSTM ...</p>
+            <p class="arrow">&darr;</p>
+            <p class="seq">output sequence</p>
+          </section>
+          <section>
+            <h3>Reversed Order</h3>
+            <ul>
+              <li>It's extremely valuable to reverse the order of the words</li>
+              <li>Reverse the order of the words in the source sentence but not the target sentence</li>
+              <li>Introduce many short term dependencies that made the optimization problem much simpler</li>
+              <li><i>Adventage:</i> be able to do well on long sentences</li>
+            </ul>
+          </section>
+          <section>
+            <h3>Reversed Order</h3>
+            <p align=left>
+              When we try to translate <b>abc</b> to <b>&alpha;&beta;&gamma;</b>, the LSTM is asked to map:
+            </p>
+            <p>c, b, a &rarr; &alpha;, &beta;, &gamma;</p>
+            <p align=left>This way, <b>a</b> is in close proximity to <b>&alpha;</b>, <b>b</b> is fairly close to <b>&beta;</b>, and so on.</p>
+          </section>
+          <section>
+            <h3>Reversed Order</h3>
+            <ul>
+              <li>The average distance between corresponding words is unchanged</li>
+              <li>The first few words are now very close in source and target sentences &rArr; Minimal time lag is greatly reduced</li>
+              <li>Backpropagation has an easier time <i>establishing communication</i></li>
+              <li>For long sentence, this method still works well. It results in LSTMs with better memory utilization</li>
+            </ul>
+          </section>
+          <section>
+            <h3>Fixed-dimensional Vector</h3>
+          </section>
+          <section>
+            <h3>Two LSTMs</h3>
+          </section>
+          <section>
+            <h3>Conclusion</h3>
           </section>
         </section>
 
