@@ -91,13 +91,13 @@
               <li>Machine translation on an English to French translation task from the <i>WMT'14</i> dataset</li>
             </ul>
           </section>
-          <section>
+          <section data-transition="convex">
             <h3>Introduction</h3>
-            <p class="seq">&rarr; input sequence</p>
+            <p class="seq">input sequence from source</p>
             <p class="arrow">&darr;</p>
             <p class="seq">(<i>reverse order</i>)</p>
             <p class="arrow">&darr;</p>
-            <p class="seq">sentence input &larr;</p>
+            <p class="seq">source from sentence input</p>
             <p class="arrow">&darr;</p>
             <p class="vector">LSTM ...</p>
             <p class="arrow">&darr;</p>
@@ -135,12 +135,33 @@
           </section>
           <section>
             <h3>Fixed-dimensional Vector</h3>
+            <ul>
+              <li>Instead of directly mapping English to French, this model maps the source to a fixed-sized vector first</li>
+              <li>
+                The goal of the LSTM is to estimate the conditional probability
+                \[p(y_1,\dots,y_T|x_1,\dots,x_T)\]
+              </li>
+              <li>
+                When fixed-dimensional representation $v$ of the input sequence $(x_1,\dots,x_T)$ is given, the LSTM-LM can compute
+                \[p(y_1,\dots,y_T|x_1,\dots,x_T)=\prod_{t=1}^{T'}p(y_t|v,y_1,\dots,y_{t-1})\]
+              </li>
+            </ul>
           </section>
           <section>
             <h3>Two LSTMs</h3>
           </section>
           <section>
-            <h3>Conclusion</h3>
+            <h3>Result &amp; Comparision</h3>
+            <ul>
+              <li>BLEU score on WMT'14 dataset:
+                <ol>
+                  <li>Direct translations obtained a not bad score(with a vocabulary of only 80K words!), which is 34.81</li>
+                  <li>The score obtained by an SMT baseline is 33.30</li>
+                  <li>Use the LSTM to rescore the publicly available 1000-best lists of the SMT baseline get 36.5(the best result of the published result is 37.0)</li>
+                </ol>
+              </li>
+              <li>This still has much room for improvement</li>
+            </ul>
           </section>
         </section>
 
@@ -164,6 +185,10 @@
 				center: true,
 				slideNumber: true,
 				transition: 'slide', // none/fade/slide/convex/concave/zoom
+        math: {
+          mathjax: 'https://cdn.mathjax.org/mathjax/latest/MathJax.js',
+          config: 'TeX-AMS_HTML-full'
+        },
 
 				// More info https://github.com/hakimel/reveal.js#dependencies
 				dependencies: [
@@ -173,7 +198,8 @@
 					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
 					{ src: 'plugin/zoom-js/zoom.js', async: true },
 					{ src: 'plugin/notes/notes.js', async: true },
-					{ src: 'plugin/prism/prism.js', async: true }
+					{ src: 'plugin/prism/prism.js', async: true },
+          { src: 'plugin/math/math.js', async: true }
 				]
 			});
 		</script>
