@@ -190,7 +190,7 @@
 						<ul>
 							<li>BasciRNNCell</li>
 							<li>BasicLSTMCell</li>
-							<li>GRUCell (input &amp forget → update &amp reset)</li>
+							<li>GRUCell (update &amp reset)</li>
 							<li>LSTMCell (peephole)</li>
 						</ul>
 					</section>
@@ -198,6 +198,7 @@
 						<h2>RNN Cell wrappers</h2>
 						<p>RNNCells that wrap other RNNCells</p>
 						<ul>
+							<li>MultiRNNCell</li>
 							<li>DropoutWrapper</li>
 							<li>EmbeddingWrapper</li>
 							<li>InputProjectionWrapper</li>
@@ -206,12 +207,53 @@
 					</section>
 					<section>
 						<h2>LSTM</h2>
+						<pre><code class="language-python" data-trim>
+lstm = rnn_cell.BasicLSTMCell(lstm_size)
+# Initial state of the LSTM memory.
+state = tf.zeros([batch_size, lstm.state_size])
+probabilities = []
+loss = 0.0
+for current_batch_of_words in words_in_dataset:
+    # The value of state is updated after processing each batch of words.
+    output, state = lstm(current_batch_of_words, state)
+
+    # The LSTM output can be used to make next word predictions
+    logits = tf.matmul(output, softmax_w) + softmax_b
+    probabilities.append(tf.nn.softmax(logits))
+    loss += loss_function(probabilities, target_words)
+						</code></pre>
 					</section>
 					<section>
 						<h2>Truncated Backpropagation</h2>
+						<pre><code class="language-python" data-trim>
+# Placeholder for the inputs in a given iteration.
+words = tf.placeholder(tf.int32, [batch_size, num_steps])
+
+lstm = rnn_cell.BasicLSTMCell(lstm_size)
+# Initial state of the LSTM memory.
+initial_state = state = tf.zeros([batch_size, lstm.state_size])
+
+for i in range(num_steps):
+    # The value of state is updated after processing each batch of words.
+    output, state = lstm(words[:, i], state)
+
+final_state = state
+						</code></pre>
 					</section>
 					<section>
 						<h2>Stacking multiple LSTMs</h2>
+						<pre><code class="language-python" data-trim>
+lstm = rnn_cell.BasicLSTMCell(lstm_size, state_is_tuple=False)
+stacked_lstm = rnn_cell.MultiRNNCell([lstm] * number_of_layers,
+									state_is_tuple=False)
+
+initial_state = state = stacked_lstm.zero_state(batch_size, tf.float32)
+for i in range(num_steps):
+    # The value of state is updated after processing each batch of words.
+    output, state = stacked_lstm(words[:, i], state)
+
+final_state = state
+						</code></pre>
 					</section>
 					<section>
 						<h2>Decreasing learning rate schedule</h2>
