@@ -130,6 +130,82 @@ buckets = [(5, 10), (10, 15), (20, 25), (40, 50)]
           <section>
             <h2>Neural Conversation Models</h2>
           </section>
+          <section>
+            <h3>Neural Conversation Models</h3>
+            <ul>
+              <li>Based on Tensorflow Sequence-to-sequence Models.</li>
+              <li>Modified by <strong>pbhatia243</strong>.</li>
+            </ul>
+            <p><small><u>https://github.com/pbhatia243/Neural_Conversation_Models</u></small></p>
+          </section>
+          <section>
+            <h3>Main Structure</h3>
+            <ul>
+              <li>Train:</li>
+              <ul>
+                <li>Simple seq2seq models</li>
+                <li>Attention based seq2seq models</li>
+              </ul>
+              <li>Decode:</li>
+              <ul>
+                <li>Beam Search Option</li>
+              </ul>
+            </ul>
+          </section>
+          <section>
+            <h3>Keep training</h3>
+            <ul>
+              <li>Decrease learning rate.</li>
+              <li>Set checkpoint.</li>
+            </ul>
+          </section>
+          <section>
+            <h3>Generate batch data</h3>
+            <p>To support bucket.</p>
+            <pre><code class="language-python">
+def get_batch(self, data, bucket_id):
+  ...
+  # Get a random batch of encoder and decoder inputs from data,
+  # pad them if needed, reverse encoder inputs and add GO to decoder.
+  for _ in xrange(self.batch_size):
+    encoder_input, decoder_input = random.choice(data[bucket_id])
+    ...
+            </code></pre>
+          </section>
+          <section>
+            <h3>Generate batch data (cont.)</h3>
+            <pre><code class="language-python">
+# Encoder inputs are padded and then reversed.
+encoder_pad = [PAD_ID] * (encoder_size - len(encoder_input))
+encoder_inputs.append(list(reversed(encoder_input + encoder_pad)))
+            </code></pre>
+            <pre><code class="language-python">
+# Decoder inputs get an extra "GO" symbol, and are padded then.
+decoder_pad_size = decoder_size - len(decoder_input) - 1
+decoder_inputs.append([GO_ID] + decoder_input +
+                      [PAD_ID] * decoder_pad_size
+            </code></pre>
+          </section>
+          <section>
+            <h3>Decrease learning rate</h3>
+            <pre><code class="language-python">
+# Decrease learning rate if no improvement was seen over last 3 times.
+if len(previous_losses) > 2 and loss > max(previous_losses[-3:]):
+  sess.run(model.learning_rate_decay_op)
+            </code></pre>
+          </section>
+          <section>
+            <h3>Checkpoint</h3>
+            <pre><code class="language-python">
+ckpt = tf.train.get_checkpoint_state(FLAGS.train_dir)
+
+if ckpt and tf.gfile.Exists(ckpt.model_checkpoint_path):
+  model.saver.restore(session, ckpt.model_checkpoint_path)
+else:
+  session.run(tf.initialize_all_variables())
+return model
+            </code></pre>
+          </section>
         </section>
 
         <section>
