@@ -58,7 +58,35 @@
             <h2>Attention</h2>
           </section>
           <section>
-            
+            <h3>Attention</h3>
+            <ul>
+              <li>A recent trend in Deep Learning are Attention Mechanisms</li>
+              <li>They are loosely based on the visual attention mechanism found in humans</li>
+              <li>Being able to focus on a certain region of an image with “high resolution” while perceiving the surrounding image in “low resolution”</li>
+            </ul>
+            <p><small>Reference: <u>http://www.wildml.com/2016/01/attention-and-memory-in-deep-learning-and-nlp/</u></small></p>
+          </section>
+          <section>
+            <figure>
+              <img src="images/focal.jpg" alt="focal.jpg" width="70%">
+              <figcaption><small>photoed by Yist Lin</small></figcaption>
+            </figure>
+          </section>
+          <section>
+            <h3>Original Neural Machine Translation</h3>
+            <ul>
+              <li>Encode a sentence into a fixed-dimensional vector</li>
+              <li>Use LSTM to handle long term dependencies</li>
+              <li>Reverse source sentences or feeding them twice to help a network to better memorize things</li>
+            </ul>
+          </section>
+          <section>
+            <h3>Neural Machine Translation with Attention</h3>
+            <ul>
+              <li>No need to encode source sentences</li>
+              <li>Each decoder output word now depends on a weighted combination of all the input states, not just the last state</li>
+              <li><i>Disadvantages:</i> We need to calculate an attention value for each combination of input and output word</li>
+            </ul>
           </section>
         </section>
 
