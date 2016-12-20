@@ -46,6 +46,44 @@
 
         <section>
           <section>
+            <h3>A Diversity-Promoting Objective Function for Neural Conversation Models</h3>
+            <p><small>
+              Jiwei Li, Michel Galley, Chris Brockett, Jianfeng Gao, Bill Dolan
+              <br>
+              Cite: arXiv:1510.03055 [cs.CL]
+            </small></p>
+          </section>
+          <section>
+            <h2>MMI Models</h2>
+          </section>
+          <section>
+            <h2>MMI Models</h2>
+            <p align="left">
+              Parameters are chosen to maximize mutual information between the source $S$ and the target $T$:
+            </p>
+            \[\log\frac{p(S,T)}{p(S)p(T)}\]
+            <p align="left">
+              And this is what we want:
+            </p>
+            \[\hat{T} = \underset{T}{arg\,max}\{\log p(T|S)-\log p(T)\}\]
+          </section>
+          <section>
+            <h2>MMI Models</h2>
+            <p align="left">
+              We introduces a hyperparameter $\lambda$ that controls how much to penalize generic responses:
+            </p>
+            \[\hat{T} = \underset{T}{arg\,max}\{\log p(T|S)-\lambda\log p(T)\}\]
+          </section>
+          <section>
+            <h2>MMI Models</h2>
+            <p align="left">
+              We can rewrite the function as,
+            </p>
+            \begin{align*}
+              \hat{T} &= \underset{T}{arg\,max}\{\log p(T|S) - \lambda\log p(T)\}\\
+                      &= \underset{T}{arg\,max}\{ (1-\lambda)\log p(T|S) + \lambda\log p(S|T) - \lambda\log p(S) \}\\
+                      &= \underset{T}{arg\,max}\{ (1-\lambda)\log p(T|S) + \lambda\log p(S|T)\}
+            \end{align*}
           </section>
         </section>
 
