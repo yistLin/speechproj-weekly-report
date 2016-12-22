@@ -159,19 +159,19 @@
             \end{align*}
           </section>
           <section>
-            <h2>MMI-antiLM</h2>
+            <h2>MMI-antiLM (1/3)</h2>
             <p align="left">It penalizes not only high-frequency, generic responses, but also fluent ones and thus lead to ungrammatical outputs.</p>
             \[\log p(T|S)-\lambda\log p(T)\]
           </section>
           <section>
-            <h2>MMI-antiLM</h2>
+            <h2>MMI-antiLM (2/3)</h2>
             <p align="left"><b>Solution</b></p>
             \[ p(T) = \prod_{k=1}^{N_t} p(t_k|t_1,t_2,\dots,t_{k-1}) \]
             <p align="left">A weight $g(k)$ that is decremented monotonically,</p>
             \[ U(T) = \prod_{k=1}^{N_t} p(t_k|t_1,t_2,\dots,t_{k-1}) \cdot g(k) \]
           </section>
           <section>
-            <h2>MMI-antiLM</h2>
+            <h2>MMI-antiLM (3/3)</h2>
             <p align="left">Penalizing words predicted early on by the language model contributes more to the diversity of the sentence. We set up a threshold $\gamma$ by penalizing the first $\gamma$ words,</p>
             \begin{equation*}
               g(k) = \left\{
@@ -185,7 +185,59 @@
             \[ \log p(T|S) - \lambda\log U(T) \]
           </section>
           <section>
-            <h2>MMI-bidi</h2>
+            <h2>MMI-bidi (1/3)</h2>
+            <p align="left">Direct decoding from</p>
+            \[ (1-\lambda)\log p(T|S)+\lambda\log p(S|T) \]
+            <p align="left">is intractable, as the second part requires completion of target generation before $p(S|T)$ can be effectively computed.</p>
+          </section>
+          <section>
+            <h2>MMI-bidi (2/3)</h2>
+            \[ (1-\lambda)\log p(T|S)+\lambda\log p(S|T) \]
+            <p align="left">For pratical reasons, we generate N-best lists given the first part of objective function, and then rerank the N-best lists using the second term of the objective function.</p>
+          </section>
+          <section>
+            <h2>MMI-bidi (3/3)</h2>
+            <p align="left">Drawbacks:</p>
+            <ul>
+              <li>Non-globally-optimal</li>
+              <li>Rely heavily on the system's success in generating a sufficiently diverse N-best list</li>
+              <li>Require a long N-best list be generated for each message</li>
+            </ul>
+            <p align="left">The results are grammatical and well-formed.</p>
+          </section>
+          <section>
+            <h2>Experiments</h2>
+            <table>
+              <caption>Training datasets: Twitter conversation triple dataset (size: 23M)</caption>
+              <thead>
+                <tr>
+                  <th>Model</th>
+                  <th>BLEU</th>
+                  <th>distinct-1</th>
+                  <th>distince-2</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>SEQ2SEQ</td>
+                  <td>4.31</td>
+                  <td>.023</td>
+                  <td>.107</td>
+                </tr>
+                <tr>
+                  <td>MMI-antiLM</td>
+                  <td>4.86</td>
+                  <td>.033</td>
+                  <td>.175</td>
+                </tr>
+                <tr>
+                  <td>MMI-bidi</td>
+                  <td>5.22</td>
+                  <td>.051</td>
+                  <td>.270</td>
+                </tr>
+              </tbody>
+            </table>
           </section>
         </section>
 
