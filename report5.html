@@ -46,7 +46,7 @@
 
         <section>
           <section>
-            <h3>A Diversity-Promoting Objective Function for Neural Conversation Models</h3>
+            <h2>A Diversity-Promoting<br>Objective Function<br>for Neural Conversation Models</h2>
             <p><small>
               Jiwei Li, Michel Galley, Chris Brockett, Jianfeng Gao, Bill Dolan
               <br>
@@ -54,21 +54,90 @@
             </small></p>
           </section>
           <section>
-            <h2>MMI Models</h2>
+            <h2>Introduction</h2>
+            <p align="left"><i>SEQ2SEQ</i> models are able to learn semantic and syntactic relations between pairs, and capture contextual dependencies.</p>
+            <p align="left">However, neural conversation models tend to generate <u>trivial</u> or <u>non-committal</u> responses, often involving high-frequency phrases.</p>
+          </section>
+          <section>
+            <h2>Introduction</h2>
+            <table>
+              <caption><b>Input:</b> What are you doing?</caption>
+              <thead>
+                <tr>
+                  <th>Prob.($\log$)</th>
+                  <th>Response</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>-0.86</td>
+                  <td>I don't know.</td>
+                </tr>
+                <tr>
+                  <td>-1.06</td>
+                  <td>Nothing.</td>
+                </tr>
+                <tr>
+                  <td>-1.10</td>
+                  <td>I'm talking to you.</td>
+                </tr>
+              </tbody>
+            </table>
+          </section>
+          <section>
+            <h2>Introduction</h2>
+            <table>
+              <caption><b>Input:</b> What is your name?</caption>
+              <thead>
+                <tr>
+                  <th>Prob.($\log$)</th>
+                  <th>Response</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>-0.91</td>
+                  <td>I don't know.</td>
+                </tr>
+                <tr>
+                  <td>-0.92</td>
+                  <td>I don't know, sir.</td>
+                </tr>
+                <tr>
+                  <td>-1.55</td>
+                  <td>My name is Robert.</td>
+                </tr>
+              </tbody>
+            </table>
+          </section>
+          <section>
+            <h2>Introduction</h2>
+            <p>By optimizing for the likelihood of outputs given inputs, neural models assign high probability to <u>safe</u> responses.</p>
+          </section>
+          <section>
+            <h2>Maximum Mutual Information</h2>
+            <ul>
+              <li>The likelihood that a message will be provided to a given response</li>
+              <li>Use MMI as an objective function to measures the mutual dependence between inputs and outputs</li>
+            </ul>
           </section>
           <section>
             <h2>MMI Models</h2>
             <p align="left">
-              Parameters are chosen to maximize mutual information between the source $S$ and the target $T$:
+              The standard objective function for SEQ2SEQ models is the log-likelihood of target $T$ given source $S$:
+            </p>
+            \[\hat{T} = \underset{T}{arg\,max}\{\log p(T|S)\}\]
+            <p align="left">
+              In MMI, parameters are chosen to maximize mutual information between the source $S$ and the target $T$:
             </p>
             \[\log\frac{p(S,T)}{p(S)p(T)}\]
+          </section>
+          <section>
+            <h2>MMI Models</h2>
             <p align="left">
               And this is what we want:
             </p>
             \[\hat{T} = \underset{T}{arg\,max}\{\log p(T|S)-\log p(T)\}\]
-          </section>
-          <section>
-            <h2>MMI Models</h2>
             <p align="left">
               We introduces a hyperparameter $\lambda$ that controls how much to penalize generic responses:
             </p>
@@ -77,6 +146,10 @@
           <section>
             <h2>MMI Models</h2>
             <p align="left">
+              By knowing that,
+            </p>
+            \[\log p(T) = \log p(T|S) + \log p(S) - \log p(S|T)\]
+            <p align="left">
               We can rewrite the function as,
             </p>
             \begin{align*}
@@ -84,6 +157,35 @@
                       &= \underset{T}{arg\,max}\{ (1-\lambda)\log p(T|S) + \lambda\log p(S|T) - \lambda\log p(S) \}\\
                       &= \underset{T}{arg\,max}\{ (1-\lambda)\log p(T|S) + \lambda\log p(S|T)\}
             \end{align*}
+          </section>
+          <section>
+            <h2>MMI-antiLM</h2>
+            <p align="left">It penalizes not only high-frequency, generic responses, but also fluent ones and thus lead to ungrammatical outputs.</p>
+            \[\log p(T|S)-\lambda\log p(T)\]
+          </section>
+          <section>
+            <h2>MMI-antiLM</h2>
+            <p align="left"><b>Solution</b></p>
+            \[ p(T) = \prod_{k=1}^{N_t} p(t_k|t_1,t_2,\dots,t_{k-1}) \]
+            <p align="left">A weight $g(k)$ that is decremented monotonically,</p>
+            \[ U(T) = \prod_{k=1}^{N_t} p(t_k|t_1,t_2,\dots,t_{k-1}) \cdot g(k) \]
+          </section>
+          <section>
+            <h2>MMI-antiLM</h2>
+            <p align="left">Penalizing words predicted early on by the language model contributes more to the diversity of the sentence. We set up a threshold $\gamma$ by penalizing the first $\gamma$ words,</p>
+            \begin{equation*}
+              g(k) = \left\{
+                \begin{aligned}
+                & 1  & &\text{if } k \leq \gamma \\
+                & 0  & &\text{if } k > \gamma
+                \end{aligned}
+              \right.
+            \end{equation*}
+            <p align="left">So now, rewrite the equation as:</p>
+            \[ \log p(T|S) - \lambda\log U(T) \]
+          </section>
+          <section>
+            <h2>MMI-bidi</h2>
           </section>
         </section>
 
