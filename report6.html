@@ -46,6 +46,24 @@
 
         <section>
           <section>
+            <h2>NLTK preprocess</h2>
+            <ul>
+              <li>WordNet Lemmatizer</li>
+            </ul>
+            <pre><code class="language-python" data-trim>
+>>> from nltk.stem import WordNetLemmatizer
+>>> wnl = WordNetLemmatizer()
+>>> print(wnl.lemmatize('dogs'))
+dog
+>>> print(wnl.lemmatize('churches'))
+church
+>>> print(wnl.lemmatize('crying'))
+cry
+>>> print(wnl.lemmatize('studies'))
+study
+
+            </code></pre>
+            <p><small><u>http://www.nltk.org/api/nltk.stem.html</u></small></p>
           </section>
         </section>
 
