@@ -67,11 +67,32 @@ study
           </section>
           <section>
             <h2>Parameters</h2>
-            <ul>
-              <li>Vocabulary: 50809</li>
-              <li>Number of layers: 3</li>
-              <li>Layer size: 256</li>
-            </ul>
+            <table>
+              <thead>
+                <tr>
+                  <th></th>
+                  <th>with NLTK</th>
+                  <th>without NLTK</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th>Vocabulary<br>Size</th>
+                  <td>50809<br>(all words)</td>
+                  <td>53346<br>(frequency > 1)</td>
+                </tr>
+                <tr>
+                  <th>#Layers</th>
+                  <td>3</td>
+                  <td>3</td>
+                </tr>
+                <tr>
+                  <th>Layer Size</th>
+                  <td>256</td>
+                  <td>256</td>
+                </tr>
+              </tbody>
+            </table>
           </section>
           <section>
             <h2>Demo Time</h2>
