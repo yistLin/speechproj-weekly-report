@@ -49,7 +49,57 @@
         </section>
 
         <section>
-          <h2></h2>
+          <section>
+            <h2>NLG Implementation</h2>
+            <ul>
+              <li><i>Training Data:</i> Hotel domain </li>
+              <li><i>Model:</i> Attention based seq2seq model</li>
+            </ul>
+          </section>
+          <section>
+            <h2>Training Data</h2>
+            <pre><code class="language-python" data-trim>
+[
+  "inform_no_match(area='amanico ergina village')",
+  "sorry , there is no match for hotel -s in amanico ergina village",
+  "i am sorry but there is no place in the area of amanico ergina village"
+],
+[
+  "?confirm(pricerange='pricey')",
+  "do you want a pricey hotel",
+  "let me confirm , you are looking for a hotel in the pricey price range right"
+]
+            </code></pre>
+          </section>
+          <section>
+            <h2>Preprocess</h2>
+            <ol>
+              <li>Replace values by symbols.</li>
+              <li>Calculate the vocabulary size.</li>
+              <li>Split data into input and output.</li>
+            </ol>
+          </section>
+          <section>
+            <h2>Input data</h2>
+            <pre><code class="language-python" data-trim>
+inform_no_match = area _AREA_ ;
+?select = acceptscreditcards yes ; acceptscreditcards no ;
+            </code></pre>
+          </section>
+          <section>
+            <h2>Output data</h2>
+            <pre><code class="language-python" data-trim>
+sorry , there is no match for hotel -s in _AREA_
+do you want to be able to use a credit card
+            </code></pre>
+          </section>
+          <section>
+            <h2>Results</h2>
+            <pre><code class="language-python" data-trim>
+there are no hotel -s in _AREA_
+what is your preference as to whether it accepts credit card -s
+            </code></pre>
+          </section>
         </section>
 
         <!-- END page -->
