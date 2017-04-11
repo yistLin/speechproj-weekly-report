@@ -67,6 +67,8 @@
             <ul>
               <li>DSTC 2 - Dialog State Tracking Challenge 2</li>
               <li>A large number of training dialogs related to restaurant search</li>
+              <li># of training data: 13918 (feedback is "success")</li>
+              <li>About 5% of them are noise</li>
               <li>Website: <a href="http://camdial.org/~mh521/dstc/">http://camdial.org/~mh521/dstc/</a></li>
             </ul>
           </section>
@@ -76,7 +78,7 @@
           </section>
           <section>
             <h3>Pre-processing</h3>
-            <img src="http://memray.me/images/slot-filling/mesnil2013investigation_atis_data.png" alt="">
+            <img src="images/intent_slot.png" alt="">
           </section>
           <section>
             <h3>Pre-processing</h3>
@@ -93,13 +95,13 @@
             <p class="fragment">inform</p>
           </section>
           <section>
-            <h3>Pre-processing: Intent</h3>
+            <h3>Pre-processing: Slot</h3>
             <p>im looking for a cheap restaurant with spanish food</p>
             <p>&#8681;</p>
             <p>inform(pricerange=<span class="fragment highlight-red">cheap</span>,food=<span class="fragment highlight-red">spanish</span>)</p>
           </section>
           <section>
-            <h3>Pre-processing</h3>
+            <h3>Pre-processing: Slot</h3>
             <table style="font-size: 24px;">
               <tr>
                 <td><b>Position</b></td>
@@ -139,6 +141,15 @@
               </tr>
             </table>
           </section>
+        </section>
+
+        <section>
+          <h3>Reference</h3>
+          <ul>
+            <li>
+              Using Recurrent Neural Networks for Slot Filling in Spoken Language Understanding (PDF: <a href="https://www.microsoft.com/en-us/research/wp-content/uploads/2016/02/TASLP_RNN_SLU_2015.pdf">here</a>)
+            </li>
+          </ul>
         </section>
 
         <section>
