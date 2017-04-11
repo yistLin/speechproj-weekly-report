@@ -143,9 +143,156 @@
 
         <section>
           <section>
-            <h2></h2>
+            <h2>Training Results</h2>
           </section>
           <section>
+            <h2>Model</h2>
+            <ul>
+              <li>Tensorflow translation model</li>
+              <li>Without _EOS</li>
+            </ul>
+          </section>
+          <section>
+            <h2>Intent Prediction</h2>
+            <p>24 intents</p>
+            <pre><code class="language-python" data-trim>
+inform, request, bye, thankyou, phone, addr, dontcare, reqalts
+null, affirm, postcode, food, pricerange, area, negate, confirm
+hello, ack, repeat, deny, restart, name, reqmore, signature
+            </code></pre>
+          </section>
+          <section>
+            <h2>Slot Prediction</h2>
+            <p>6 slots</p>
+            <pre><code class="language-python" data-trim>
+_, _FOOD, _TYPE, _AREA, _PRICERANGE, _NAME
+            </code></pre>
+          </section>
+          <section>
+            <h2>Slot result1</h2>
+            <table style="font-size: 24px;">
+              <tr>
+                <td><b>Position</b></td>
+                <td>1</td>
+                <td>2</td>
+                <td>3</td>
+                <td>4</td>
+                <td>5</td>
+                <td>6</td>
+                <td>7</td>
+                <td>8</td>
+                <td>9</td>
+              </tr>
+              <tr>
+                <td><b>Sentence</b></td>
+                <td>im</td>
+                <td>looking</td>
+                <td>for</td>
+                <td>a</td>
+                <td>cheap</td>
+                <td>restaurant</td>
+                <td>with</td>
+                <td>spanish</td>
+                <td>food</td>
+              </tr>
+              <tr>
+                <td><b>Expected slots</b></td>
+                <td>_</td>
+                <td>_</td>
+                <td>_</td>
+                <td>_</td>
+                <td>PRICERANGE</td>
+                <td>_</td>
+                <td>_</td>
+                <td>FOOD</td>
+                <td>_</td>
+              </tr>
+              <tr>
+                <td><b>Obtained slots</b></td>
+                <td>_</td>
+                <td>_</td>
+                <td>_</td>
+                <td>_</td>
+                <td>PRICERANGE</td>
+                <td>TYPE</td>
+                <td>_</td>
+                <td>_</td>
+                <td>FOOD</td>
+              </tr>
+            </table>
+          </section>
+          <section>
+            <h2>Slot result2</h2>
+            <table style="font-size: 20px;">
+              <tr>
+                <td><b>Position</b></td>
+                <td>1</td>
+                <td>2</td>
+                <td>3</td>
+                <td>4</td>
+                <td>5</td>
+                <td>6</td>
+                <td>7</td>
+                <td>8</td>
+                <td>9</td>
+                <td>10</td>
+                <td>11</td>
+                <td>12</td>
+              </tr>
+              <tr>
+                <td><b>Sentence</b></td>
+                <td>im</td>
+                <td>looking</td>
+                <td>for</td>
+                <td>a</td>
+                <td>cheap</td>
+                <td>restaurant</td>
+                <td>in</td>
+                <td>the</td>
+                <td>west</td>
+                <td>part</td>
+                <td>of</td>
+                <td>town</td>
+              </tr>
+              <tr>
+                <td><b>Expected slots</b></td>
+                <td>_</td>
+                <td>_</td>
+                <td>_</td>
+                <td>_</td>
+                <td>PRICERANGE</td>
+                <td>_</td>
+                <td>_</td>
+                <td>_</td>
+                <td>AREA</td>
+                <td>_</td>
+                <td>_</td>
+                <td>_</td>
+              </tr>
+              <tr>
+                <td><b>Obtained slots</b></td>
+                <td>_</td>
+                <td>_</td>
+                <td>_</td>
+                <td>_</td>
+                <td>PRICERANGE</td>
+                <td>TYPE</td>
+                <td>_</td>
+                <td>AREA</td>
+                <td>_</td>
+                <td>_</td>
+                <td>_</td>
+                <td>_</td>
+              </tr>
+            </table>
+          </section>
+          <section>
+            <h2>Problem</h2>
+            <p>Slots are not aligned with the sentence.</p>
+            <ul>
+              <li>Attemp1: modify the weight</li>
+              <li>Attemp2: remove _EOS</li>
+            </ul>
           </section>
         </section>
 
