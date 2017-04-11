@@ -63,6 +63,81 @@
             <h2>Data Pre-processing</h2>
           </section>
           <section>
+            <h3>Dataset</h3>
+            <ul>
+              <li>DSTC 2 - Dialog State Tracking Challenge 2</li>
+              <li>A large number of training dialogs related to restaurant search</li>
+              <li>Website: <a href="http://camdial.org/~mh521/dstc/">http://camdial.org/~mh521/dstc/</a></li>
+            </ul>
+          </section>
+          <section>
+            <h3>Dataset</h3>
+            <img src="images/dstc2-turn.png" alt="" width="40%">
+          </section>
+          <section>
+            <h3>Pre-processing</h3>
+            <img src="http://memray.me/images/slot-filling/mesnil2013investigation_atis_data.png" alt="">
+          </section>
+          <section>
+            <h3>Pre-processing</h3>
+            <p>im looking for a cheap restaurant with spanish food</p>
+            <p>&#8681;</p>
+            <p>inform(pricerange=cheap,food=spanish)</p>
+          </section>
+          <section>
+            <h3>Pre-processing: Intent</h3>
+            <p>im looking for a cheap restaurant with spanish food</p>
+            <p>&#8681;</p>
+            <p><span class="fragment highlight-red">inform</span>(pricerange=cheap,food=spanish)</p>
+            <p class="fragment">&#8681;</p>
+            <p class="fragment">inform</p>
+          </section>
+          <section>
+            <h3>Pre-processing: Intent</h3>
+            <p>im looking for a cheap restaurant with spanish food</p>
+            <p>&#8681;</p>
+            <p>inform(pricerange=<span class="fragment highlight-red">cheap</span>,food=<span class="fragment highlight-red">spanish</span>)</p>
+          </section>
+          <section>
+            <h3>Pre-processing</h3>
+            <table style="font-size: 24px;">
+              <tr>
+                <td><b>Position</b></td>
+                <td>1</td>
+                <td>2</td>
+                <td>3</td>
+                <td>4</td>
+                <td>5</td>
+                <td>6</td>
+                <td>7</td>
+                <td>8</td>
+                <td>9</td>
+              </tr>
+              <tr>
+                <td><b>Sentence</b></td>
+                <td>im</td>
+                <td>looking</td>
+                <td>for</td>
+                <td>a</td>
+                <td>cheap</td>
+                <td>restaurant</td>
+                <td>with</td>
+                <td>spanish</td>
+                <td>food</td>
+              </tr>
+              <tr>
+                <td><b>Slots</b></td>
+                <td>_</td>
+                <td>_</td>
+                <td>_</td>
+                <td>_</td>
+                <td>PRICERANGE</td>
+                <td>_</td>
+                <td>_</td>
+                <td>FOOD</td>
+                <td>_</td>
+              </tr>
+            </table>
           </section>
         </section>
 
