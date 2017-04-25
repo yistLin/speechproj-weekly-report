@@ -85,17 +85,101 @@
 
         <section>
           <section>
-            <h3>Data Augmentation</h3>
+            <h3>Data Augmentation - Step1</h3>
+            <ol>
+              <li><b>Find patterns</b><br>eg: im looking for XXX</li>
+              <li><b>Define sets</b><br>eg: [bar, cafe, restaurant, ...], [...], ...</li>
+              <li><b>Generate data</b>
+            </ol>
+          </section>
+          <section>
+            <h3>Data Augmentation - Step2</h3>
+            <ol>
+              <li>Combine <b>origin data</b> and <b>generated data</b>.</li>
+              <li>Shuffle.</li>
+              <li>Split into <b>train data</b> and <b>test data</b>.</li>
+            </ol>
+          </section>
+          <section>
+            <h3>Data Size</h3>
+            <table>
+              <tr>
+                <td><b>Data:</b></td>
+                <td><b>origin</b></td>
+                <td><b>train</b></td>
+                <td><b>test</b></td>
+              </tr>
+              <tr>
+                <td><b>Lines:</b></td>
+                <td>13917</td>
+                <td>69607</td>
+                <td>10000</td>
+              </tr>
+            </table>
+
+            <pre><code class="language-python" data-trim>
+bucket[0] with length =  4, has 19586 lines.
+bucket[1] with length =  7, has 17268 lines.
+bucket[2] with length = 10, has 20826 lines.
+bucket[3] with length = 20, has 11927 lines.
+            </code></pre>
+          </section>
+          <section>
+            <h3>Training Process</h3>
+            <table>
+              <tr>
+                <td></td>
+                <td align="center"><b>seq2seq</b></td>
+                <td align="center"><b>birnn</b></td>
+              </tr>
+              <tr>
+                <td><b>epoch:</b></td>
+                <td>6600</td>
+                <td>100</td>
+              </tr>
+              <tr>
+                <td><b>batch size:</b></td>
+                <td>32</td>
+                <td>32</td>
+              </tr>
+              <tr>
+                <td><b>training time:</b></td>
+                <td>~3.5hr</td>
+                <td>~2.5hr</td>
+              </tr>
+            </table>
+          </section>
+          <section>
+            <h3>Decoding</h3>
+          </section>
+          <section>
+            <h3>Evaluation - Sentence Level Accuracy</h3>
+            $$a_i = \frac{length - errors}{length}$$
+            $$Accuracy = \frac{\sum a_i}{DataSize}$$
+          </section>
+          <section>
+            <h3>Evaluation - Word Level Accuracy</h3>
+            $$Accuracy = \frac{totalWords - errors}{totalWords}$$
           </section>
           <section>
             <h3>Evaluation</h3>
-Tensorflow seq2seq:
-Average accuracy: 0.9921225419025421
-Total accuracy: 0.9951270907414724
-
-birnn:
-Average accuracy: 0.9941265562215562
-Total accuracy: 0.9976129329645727
+            <table>
+              <tr>
+                <td></td>
+                <td><b>seq2seq</b></td>
+                <td><b>birnn</b></td>
+              </tr>
+              <tr>
+                <td><b>Sentence level acc:</b></td>
+                <td>~99.21%</td>
+                <td>~99.41%</td>
+              </tr>
+              <tr>
+                <td><b>Word level acc:</b></td>
+                <td>~99.51%</td>
+                <td>~99.76%</td>
+              </tr>
+            </table>
           </section>
         </section>
 
