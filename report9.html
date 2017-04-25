@@ -46,6 +46,40 @@
 
         <section>
           <section>
+            <h3>Attention-Based Recurrent Neural Network Models for Joint Intent Detection and Slot Filling</h3>
+            <p>Bing Liu, Ian Lane</p>
+            <p><small>https://arxiv.org/pdf/1609.01454.pdf</small></p>
+          </section>
+          <section>
+            <h3>Introduction</h3>
+            <ol>
+              <li>Joint intent detection and slot filling</li>
+              <li>Unlike in machine translation and speech recognition, alignment is <span class="fragment highlight-red">explicit</span> in slot filling</li>
+              <li>The <span class="fragment highlight-red">attention</span> mechanism provide additional information to the intent classification and slot label prediction</li>
+            </ol>
+          </section>
+          <section>
+            <h3>Encoder-Decoder Model with Aligned Inputs and Attention</h3>
+            <img src="images/seq2seq-attention.png" alt="seq2seq-attention.png">
+          </section>
+          <section>
+            <h3>Attention-Based RNN Model</h3>
+            <img src="images/rnn-attention.png" width="70%" alt="rnn-attention.png">
+          </section>
+          <section>
+            <h3>Aligned Inputs</h3>
+            <p align="left">The bidirectional RNN encoder reads the source word sequence forward and backward. The forward RNN generates a hidden state $f h_i$ at each time step. Similarly, the backward RNN generates a sequence of hidden states ($b h_T, \dots, b h_1$).</p>
+            $$ h_i = [ f h_i , b h_i ]$$
+          </section>
+          <section>
+            <h3>Attention - Context Vectors</h3>
+            <p align="left">The context vector $c_i$ is computed as a weighted sum of the encoder states $h = (h_1, \dots, h_T)$</p>
+            $$ c_i = \sum_{j=1}^{T} \alpha_{i,j} h_j $$
+            <p align="left">The context vector $c_i$ provides additional information to the decoder and can be seen as a continuous bag of weighted features ($h_1, \dots, h_T$).</p>
+          </section>
+          <section>
+            <h3>Results - Slot Filling</h3>
+            <img src="images/results-comparison.png" alt="results-comparison.png">
           </section>
         </section>
 
