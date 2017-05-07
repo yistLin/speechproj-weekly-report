@@ -3,7 +3,7 @@
 
   <head>
     <meta charset="utf-8">
-    <title>Weekly Report IX</title>
+    <title>Weekly Report X</title>
     <meta name="description" content="">
     <meta name="author" content="">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -49,17 +49,55 @@
             <h3>Use ATIS to evaluate our model</h3>
           </section>
           <section>
-            <h3>Data bucketing</h3>
-            <ul>
-              <li>bucket0: 1~8</li>
-              <li>bucket1: 9~13</li>
-              <li>bucket2: 14~29</li>
-            </ul>
-          </section>
-          <section>
             <h3>Evaluation - Sentence Level Accuracy</h3>
             $$a_i = \frac{length - errors}{length}$$
             $$Accuracy = \frac{\sum a_i}{DataSize}$$
+          </section>
+          <section>
+            <h3>Data bucketing 1</h3>
+            <pre><code class="language-python" data-trim>
+dataset[0] with length = 8, has 841 lines.
+dataset[1] with length = 16, has 3428 lines.
+dataset[2] with length = 24, has 628 lines.
+dataset[3] with length = 32, has 65 lines.
+            </code></pre>
+          </section>
+          <section>
+            <h3>Evaluation</h3>
+            <table>
+              <tr>
+                <td></td>
+                <td><b>sentence level acc</b></td>
+              </tr>
+              <tr>
+                <td><b>bucket0:</b></td>
+                <td>~91.85%</td>
+              </tr>
+              <tr>
+                <td><b>bucket1:</b></td>
+                <td>~97.30%</td>
+              </tr>
+              <tr>
+                <td><b>bucket2:</b></td>
+                <td>~95.63%</td>
+              </tr>
+              <tr>
+                <td><b>bucket3:</b></td>
+                <td>~67.80%</td>
+              </tr>
+              <tr>
+                <td><b>total:</b></td>
+                <td>~95.72%</td>
+              </tr>
+            </table>
+          </section>
+          <section>
+            <h3>Data bucketing 2</h3>
+            <pre><code class="language-python" data-trim>
+dataset[0] with length = 9, has 1308 lines.
+dataset[1] with length = 14, has 2394 lines.
+dataset[2] with length = 30, has 1255 lines.
+            </code></pre>
           </section>
           <section>
             <h3>Evaluation</h3>
