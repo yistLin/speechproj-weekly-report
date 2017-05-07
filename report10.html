@@ -46,6 +46,45 @@
 
         <section>
           <section>
+            <h3>Use ATIS to evaluate our model</h3>
+          </section>
+          <section>
+            <h3>Data bucketing</h3>
+            <ul>
+              <li>bucket0: 1~8</li>
+              <li>bucket1: 9~13</li>
+              <li>bucket2: 14~29</li>
+            </ul>
+          </section>
+          <section>
+            <h3>Evaluation - Sentence Level Accuracy</h3>
+            $$a_i = \frac{length - errors}{length}$$
+            $$Accuracy = \frac{\sum a_i}{DataSize}$$
+          </section>
+          <section>
+            <h3>Evaluation</h3>
+            <table>
+              <tr>
+                <td></td>
+                <td><b>sentence level acc</b></td>
+              </tr>
+              <tr>
+                <td><b>bucket0:</b></td>
+                <td>~93.13%</td>
+              </tr>
+              <tr>
+                <td><b>bucket1:</b></td>
+                <td>~96.84%</td>
+              </tr>
+              <tr>
+                <td><b>bucket2:</b></td>
+                <td>~95.59%</td>
+              </tr>
+              <tr>
+                <td><b>total:</b></td>
+                <td>~95.32%</td>
+              </tr>
+            </table>
           </section>
         </section>
 
