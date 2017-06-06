@@ -41,11 +41,66 @@
         <section>
           <h1>Weekly Report XI</h1>
           <p>林義聖、陳力宇</p>
-          <p>May 23, 2017</p>
+          <p>June 6, 2017</p>
         </section>
 
         <section>
           <section>
+            <h2>Reinforcement Learning<br>for End-to-end Dialogue System</h2>
+          </section>
+          <section>
+            <h3>End-to-end Model</h3>
+            <ul>
+              <li>A single model trained directly on conversational data</li>
+              <li>Uses a single objective function, maximum likelihood</li>
+              <li>Maximum likelihood &rArr; generic responses</li>
+            </ul>
+          </section>
+          <section>
+            <h3>Apply Deep Reinforcement Learning 1/3</h3>
+            <ul>
+              <li>Online resources
+                <ul>
+                  <li>
+                    UCL Course on RL - David Silver<br>
+                    http://www0.cs.ucl.ac.uk/staff/d.silver/web/Teaching.html
+                  </li>
+                  <li>
+                    Deep Learning - NTU MLDS<br>
+                    https://www.youtube.com/embed/W8XF3ME8G2I
+                  </li>
+                </ul>
+              </li>
+              <li>Deep Reinforcement Learning for Dialogue Generation</li>
+            </ul>
+          </section>
+          <section>
+            <h3>Apply Deep Reinforcement Learning 2/3</h3>
+            <ul>
+              <li>Train an end-to-end model</li>
+              <li>Policy Gradient
+                <ul>
+                  <li>We can use pre-trained model as baseline model</li>
+                  <li>Tune towards a policy that maximizes long-term reward</li>
+                </ul>
+              </li>
+              <li><i>Action</i>: the dialogue utterance to generate</li>
+              <li><i>State</i>: the previous dialogue turn</li>
+              <li><i>Policy</i>: $P_{RL}(p_{i+1}|q_{i})$</li>
+            </ul>
+          </section>
+          <section>
+            <h3>Apply Deep Reinforcement Learning 3/3</h3>
+            <ul>
+              <li>A reward is observed after a whole sentence is generated</li>
+              <li>
+                Reward
+                <ul>
+                  <li>Ease of answering: get rid of dummy sentences</li>
+                  <li>Semantic coherence</li>
+                </ul>
+              </li>
+            </ul>
           </section>
         </section>
 
