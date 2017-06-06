@@ -51,6 +51,43 @@
 
         <section>
           <section>
+            <h2>Chatbot with reinforcement learning</h2>
+          </section>
+          <section>
+            <h3>RL-rewards</h3>
+            <ul>
+              <li><b>Ease of answering</b></li>
+              $$r_1 = - \frac{1}{N_{\mathbb{S}}} \sum_{s \in \mathbb{S}}{\frac{1}{N_s} \log{p_{\rm seq2seq}(s|a)}}$$
+              <li><b>Semantic Coherence</b></li>
+              $$r_2 = \frac{1}{N_a} \log{p_{\rm seq2seq}(a|q_i, p_i)}$$
+              <li>We do not use <b>Information Flow</b></li>
+            </ul>
+          </section>
+          <section>
+            <h3>Dataset</h3>
+            <ul>
+              <li>Twitter english corpus:<br /><a href="https://github.com/Marsan-Ma/chat_corpus">https://github.com/Marsan-Ma/chat_corpus</a></li>
+              <li>About 700k lines.</li>
+            </ul>
+          </section>
+          <section>
+            <h3>Steps</h3>
+            <ol>
+              <li>Train a basic seq2seq model.</li>
+              <li>Apply reinforcement learning.</li>
+            </ol>
+          </section>
+          <section>
+            <h3>Results</h3>
+            <p>Too many punctuations.</p>
+          </section>
+          <section>
+            <h3>Punctuations &amp; EOS problem</h3>
+            <ul>
+              <li>Bad seq2seq model?</li>
+              <li>Baseline doesn't work?</li>
+              <li>Add another reward?</li>
+            </ul>
           </section>
         </section>
 
